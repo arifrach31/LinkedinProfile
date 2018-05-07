@@ -38,7 +38,7 @@ class ProfileList extends Component{
                                         />
                                         {this.props.profilesReducer.profiles.map((n)=>( 
                                             <View  style={styles.profileDetail} key={n.objectId}>
-                                                <Button transparent style={styles.btnUpdate} onPress={()=> this.props.navigation.navigate('UpdateProfile', {id: n.objectId})} {...this.props}>
+                                                <Button transparent style={styles.profileBtnUpdate} onPress={()=> this.props.navigation.navigate('UpdateProfile', {id: n.objectId})} {...this.props}>
                                                     <Icon name="settings" style={styles.textBlueTheme}/>
                                                 </Button>
                                                 <Text style={styles.profileName}>{n.name}</Text>
@@ -103,12 +103,13 @@ const styles = StyleSheet.create({
     profileDetail: {
         alignItems: 'center',
         backgroundColor: '#FFF',
+        flexWrap: 'wrap',
         justifyContent: 'center',
         paddingTop: 50,
         paddingBottom: 20,
         zIndex: 0,
     },
-    btnUpdate: {
+    profileBtnUpdate: {
         alignSelf: 'flex-end',
         position: 'absolute',
         top: 0,
@@ -119,7 +120,9 @@ const styles = StyleSheet.create({
         letterSpacing: 2,
     },
     profileHeadline: {
-        fontSize: 15,
+        color: '#3a3a3a',
+        fontSize: 14,
+        justifyContent: 'center',
     },
     profileInformation: {
         alignItems: 'center',
@@ -151,6 +154,7 @@ const styles = StyleSheet.create({
     },
     profileSummary: {
         alignItems: 'center',
+        color: '#3a3a3a',
         fontSize: 13,
         paddingTop: 5,
     },
