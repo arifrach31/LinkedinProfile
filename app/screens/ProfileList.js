@@ -24,7 +24,6 @@ class ProfileList extends Component{
 
     render(){
         return(
-            
             <Container>
                 <Content>
                     {this.props.profilesReducer.profiles.isLoading ? (<Spinner/>)
