@@ -1,78 +1,77 @@
-import React,{Component} from 'react'
+import React,{ Component } from 'react'
 import {
-    Container, Content, Text,
-    Card, CardItem, Body,
-    Header,
-    Left,
-    Right, Button, Icon,
-    Spinner, Thumbnail
-} from 'native-base'
-import {View, StyleSheet, Image, StatusBar, ImageBackground} from 'react-native'
+    Container, Content, Text, Card, 
+    CardItem, Body, Header, Left,
+    Right, Button, Icon, Spinner, 
+    Thumbnail } from 'native-base'
+import { 
+    View, StyleSheet, Image, StatusBar, 
+    ImageBackground } from 'react-native'
 import { connect } from 'react-redux'
 
 import ProfileRow from '../components/ProfileRow'
-import {allProfiles} from '../actions/profiles'
-import {allHighlights} from '../actions/highlights'
+import { allProfiles } from '../actions/profiles'
+import { allHighlights } from '../actions/highlights'
 
 class ProfileList extends Component{
     
     componentDidMount(){
+
         this.props.dispatch(allProfiles())
         this.props.dispatch(allHighlights())
 
     }
+
     render(){
         return(
+            
             <Container>
                 <Content>
-                    <ImageBackground
-                        style={{flex:1, alignSelf: 'stretch',width: '100%', height: '100%',zIndex: 0}}
-                        source={require('../assets/images/cover.jpg')}
-                    >
-                        {this.props.profilesReducer.profiles.isLoading ? (<Spinner color="#ffffff" />)
-                            : (
-                                <View style={styles.profileGroup}>
-                                    <Thumbnail large style={styles.img}
-                                        source={require('../assets/images/profile.png')}
-                                    />
-                                    <View style={styles.profileGroups}>
+                    {this.props.profilesReducer.profiles.isLoading ? (<Spinner/>)
+                    : (
+                        <ImageBackground
+                            style={{flex:1, alignSelf: 'stretch',width: '100%', height: '100%',zIndex: 0}}
+                            source={require('../assets/images/cover.jpg')}
+                        >
+                                    <View style={styles.profileGroup}>
+                                        <Thumbnail large style={styles.profileImg}
+                                            source={require('../assets/images/profile.png')}
+                                        />
                                         {this.props.profilesReducer.profiles.map((n)=>( 
-                                            <View key={n.objectId}>
+                                            <View  style={styles.profileDetail} key={n.objectId}>
                                                 <Button transparent style={styles.btnUpdate} onPress={()=> this.props.navigation.navigate('UpdateProfile', {id: n.objectId})} {...this.props}>
-                                                    <Icon name="settings" style={styles.blueTheme}/>
+                                                    <Icon name="settings" style={styles.textBlueTheme}/>
                                                 </Button>
-                                                <View style={styles.profile} key={n.objectId}>
-                                                    <Text style={styles.name}>{n.name}</Text>
-                                                    <Text style={styles.textHeadline}>{n.headline}</Text>
-                                                    <View style={styles.nowWork}>
-                                                        <Text style={styles.textWork}>{n.academy + ' - ' + n.location}</Text>
-                                                        <Text style={styles.textWork}>{n.country + ' \u2022 ' + n.connections} <Icon name="people" style={styles.icon} /></Text>
-                                                    </View>
-                                                    <View style={styles.btnGroup}>
-                                                        <Button bordered style={styles.btnMsg}>
-                                                            <Text style={styles.blueTheme}>MESSAGE</Text>
-                                                        </Button>
-                                                        <Button primary style={styles.btn}>
-                                                            <Text>CONNECT</Text>
-                                                        </Button>
-                                                    </View>
-                                                    <Text style={styles.textSummary}>{n.summary}</Text>
+                                                <Text style={styles.profileName}>{n.name}</Text>
+                                                <Text style={styles.profileHeadline}>{n.headline}</Text>
+                                                <View style={styles.profileInformation}>
+                                                    <Text style={styles.profileInformationItem}>{n.academy + ' - ' + n.location}</Text>
+                                                    <Text style={styles.profileInformationItem}>{n.country + ' \u2022 ' + n.connections} <Icon name="people" style={styles.iconSmall} /></Text>
                                                 </View>
+                                                <View style={styles.profileBtnGroup}>
+                                                    <Button bordered style={styles.profileBtnItemOutline}>
+                                                        <Text style={styles.textBlueTheme}>MESSAGE</Text>
+                                                    </Button>
+                                                    <Button primary style={styles.profileBtnItem}>
+                                                        <Text>CONNECT</Text>
+                                                    </Button>
+                                                </View>
+                                                <Text style={styles.profileSummary}>{n.summary}</Text>
                                             </View>
                                         ))}
-                                    </View>
 
-                                    <View style={styles.highlightsGroup}>
-                                        <Text style={styles.title}>Highlights</Text>
-                                        {this.props.highlightsReducer.highlights.map((n)=>(
-                                            <ProfileRow item={n} {...this.props} key={n.objectId}/>
-                                        ))}
+                                        <View style={styles.highlightsGroup}>
+                                            <Text style={styles.highlightTitle}>Highlights</Text>
+                                            {this.props.highlightsReducer.highlights.map((n)=>(
+                                                <ProfileRow item={n} {...this.props} key={n.objectId}/>
+                                            ))}
+                                        </View>
                                     </View>
-                                </View>
-                            )}
-                    </ImageBackground>
+                        </ImageBackground>
+                    )}
                 </Content>
             </Container>
+                                        
         )
     }
 }
@@ -85,100 +84,92 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(ProfileList)
 
 const styles = StyleSheet.create({
-    nowWork: {
-        marginTop: 7,
-        marginBottom: 7,
-        justifyContent: 'center',
-        alignItems: 'center',
+     // Styling for ProfileDetail Component
+    profileGroup: {
+        marginTop: 100,
+        marginBottom: 10,
+        marginRight: 10,
+        marginLeft: 10,
     },
-    textHeadline: {
-        fontSize: 15,
-    },
-    textWork: {
-        fontSize: 12,
-        color: '#918f8f'
-    },
-    icon: {
-        fontSize: 17
-    },
-    img: {
-        width: 90,
-        height: 90,
+    profileImg: {
         alignSelf: 'center',
-        position: 'absolute',
-        top: 50,
-        zIndex: 1,
         borderWidth: 3,
         borderColor: '#FFF',
+        position: 'absolute',
+        top: -50,
+        width: 90,
+        height: 90,
+        zIndex: 1,
     },
-    profileGroup: {
-
-    },
-    profileGroups: {
-        paddingTop: 50,
-        marginTop: 100,
-        zIndex: 0,
-        backgroundColor: '#FFF',
-        zIndex: 0,
-        paddingBottom: 20,
-        marginBottom: 10,
-        marginLeft: 10,
-        marginRight: 10
-    },
-    profile: {
-        justifyContent: 'center',
+    profileDetail: {
         alignItems: 'center',
-        zIndex: 0
-    },
-    highlightsGroup: {
-        marginBottom: 50,
-        marginLeft: 10,
-        marginRight: 10,
-        backgroundColor: '#FFF'
-    },
-    title: {
-        paddingTop: 10,
-        paddingLeft: 10,
-        color: '#727171',
-        fontSize: 15
-    },
-    body: {
+        backgroundColor: '#FFF',
+        justifyContent: 'center',
+        paddingTop: 50,
+        paddingBottom: 20,
         zIndex: 0,
-        
-    },
-    name: {
-        fontWeight: 'bold',
-        letterSpacing: 2
     },
     btnUpdate: {
         alignSelf: 'flex-end',
         position: 'absolute',
-        top: -50,
+        top: 0,
         right: 0,
     },
-    textSummary: {
-        paddingTop: 5,
-        alignItems: 'center',
-        fontSize: 13,
+    profileName: {
+        fontWeight: 'bold',
+        letterSpacing: 2,
     },
-    btnGroup: {
+    profileHeadline: {
+        fontSize: 15,
+    },
+    profileInformation: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 7,
+        marginBottom: 7,
+    },
+    profileInformationItem: {
+        color: '#918f8f',
+        fontSize: 12,
+    },
+    iconSmall: {
+        fontSize: 17,
+    },
+    profileBtnGroup: {
         flexDirection: 'row',
         marginTop: 10,
         marginBottom: 10
     },
-    btnMsg: {
-        marginRight: 5,
+    profileBtnItemOutline: {
         borderColor: '#0073b1',
-        height:30
-    },
-    btn: {
+        height: 35,
         marginRight: 5,
-        backgroundColor: '#0073b1',
-        height:30
     },
-    blueTheme: {
+    profileBtnItem: {
+        backgroundColor: '#0073b1',
+        height: 35,
+        marginRight: 5,
+    },
+    profileSummary: {
+        alignItems: 'center',
+        fontSize: 13,
+        paddingTop: 5,
+    },
+
+    // Styling for Highlights Component
+    highlightsGroup: {
+        backgroundColor: '#FFF',
+        marginTop: 10,
+        marginBottom: 50,
+    },
+    highlightTitle: {
+        color: '#727171',
+        fontSize: 15,
+        paddingTop: 10,
+        paddingLeft: 10,
+    },
+    textBlueTheme: {
         color: '#0073b1'
     },
 
-    
 })
