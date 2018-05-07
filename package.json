@@ -14,6 +14,7 @@
     "react": "16.3.1",
     "react-native": "0.55.3",
     "react-native-chartjs": "^1.0.2",
+    "react-native-image-picker": "^0.26.7",
     "react-navigation": "^1.5.11",
     "react-navigation-redux-helpers": "^1.0.5",
     "react-redux": "^5.0.7",
