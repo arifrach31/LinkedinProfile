@@ -7,7 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "lazy-kitten-redux-form": "0.0.3",
     "moment": "^2.22.1",
     "native-base": "^2.4.2",
